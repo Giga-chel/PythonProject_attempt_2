@@ -110,7 +110,7 @@ def test_filter_by_state_various(sample_transactions, state, expected):
 
 def test_filter_by_state_empty(sample_transactions):
     """Тест с пустым списком."""
-    result = filter_by_state(sample_transactions, "EXECUTED") == []
+    assert filter_by_state(sample_transactions, "EXECUTED") == []
 
 def test_sort_by_date_descending(sample_transactions):
     """Тест сортировки по убыванию."""
