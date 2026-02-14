@@ -15,3 +15,8 @@ def sample_transactions():
         {"id": 4, "state": "PENDING", "date": "2007-03-05T14:36:13"},
         {"id": 5, "state": "EXECUTED", "date": "2011-12-01T06:28:47"},
     ]
+
+@pytest.fixture
+def empty_transactions():
+    """Фикстура с пустым списком."""
+    return []
