@@ -1,5 +1,6 @@
 import pytest
 
+
 @pytest.fixture
 def sample_transactions():
     """Фикстура для модуля processing."""

@@ -1,10 +1,11 @@
 import pytest
 
-from src.masks import get_mask_card_number, get_mask_account
+from src.masks import get_mask_account, get_mask_card_number
 
 """Тесты для модуля masks."""
 
 # --- get_mask_card_number ---
+
 
 @pytest.mark.parametrize(
     "input_number, expected",
@@ -24,7 +25,9 @@ def test_mask_card_number_exception(invalid_input):
     with pytest.raises(ValueError):
         get_mask_card_number(invalid_input)
 
+
 # --- get_mask_account ---
+
 
 @pytest.mark.parametrize(
     "input_acc, expected",

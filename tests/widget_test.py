@@ -1,10 +1,11 @@
 import pytest
 
-from src.widget import mask_account_card, get_date
+from src.widget import get_date, mask_account_card
 
 """Тесты для модуля widget"""
 
 # --- mask_account_card ---
+
 
 @pytest.mark.parametrize(
     "input_str, expected",
@@ -27,7 +28,9 @@ def test_mask_account_card_invalid_input():
     with pytest.raises(IndexError):
         mask_account_card("")
 
+
 # --- get_date ---
+
 
 @pytest.mark.parametrize(
     "input_date, expected",
@@ -36,6 +39,7 @@ def test_mask_account_card_invalid_input():
 def test_get_date_valid(input_date, expected):
     """Тест корректной даты."""
     assert get_date(input_date) == expected
+
 
 @pytest.mark.parametrize("input_date", ["2016-09-25T08:53:22", "31.05.2019", "not a date"])
 def test_get_date_invalid(input_date):

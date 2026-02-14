@@ -6,6 +6,7 @@ from src.processing import filter_by_state, sort_by_date
 
 # --- filter_by_state ---
 
+
 def test_filter_by_state_default(sample_transactions):
     """Тест со значением state по умолчанию('EXECUTED')."""
     result = filter_by_state(sample_transactions)
@@ -31,7 +32,9 @@ def test_filter_by_state_empty(empty_transactions):
     """Тест с пустым списком."""
     assert filter_by_state(empty_transactions, "EXECUTED") == []
 
+
 # --- sort_by_date ---
+
 
 def test_sort_by_date_descending(sample_transactions):
     """Тест сортировки по убыванию."""
