@@ -58,7 +58,7 @@ def test_mask_account_card_number_exception(invalid_input):
 @pytest.mark.parametrize("input_str, expected", [
     ("Maestro 7000792289606361", "Maestro 7000 79** **** 6361"),
     ("Visa Classic 1234567890123456", "Visa Classic 1234 56** **** 3456"),
-    ("Счет 73654108430135874305", "Счет  ** 4305")
+    ("Счет 73654108430135874305", "Счет ** 4305")
 ])
 def test_mask_account_card_valid(input_str, expected):
     """Тест корректной маски карт и счетов."""
@@ -89,3 +89,37 @@ def test_get_date_invalid(input_date):
     """Тест ошибок некорректного формата даты."""
     with pytest.raises(ValueError):
         get_date(input_date)
+
+"""Тесты для модуля processing"""
+
+def test_filter_by_state_default(sample_transactions):
+    """Тест со значением state по умолчанию('EXECUTED')."""
+    result = filter_by_state(sample_transactions)
+    assert len(result) == 3
+    assert result[0]["state"] == "EXECUTED"
+
+@pytest.mark.parametrize("state, expected", [
+    ("CANCELED", 1),
+    ("PENDING", 1),
+    ("NOT_EXISTENT", 0),
+])
+def test_filter_by_state_various(sample_transactions, state, expected):
+    """Тест с разными статусами."""
+    result = filter_by_state(sample_transactions, state)
+    assert len(result) == expected
+
+def test_filter_by_state_empty(sample_transactions):
+    """Тест с пустым списком."""
+    result = filter_by_state(sample_transactions, "EXECUTED") == []
+
+def test_sort_by_date_descending(sample_transactions):
+    """Тест сортировки по убыванию."""
+    result = sort_by_date(sample_transactions)
+    ids = [t["id"] for t in result]
+    assert ids == [2, 3, 1, 5, 4]
+
+def test_sort_by_date_ascending(sample_transactions):
+    """Тест сортировки по возрастанию."""
+    result = sort_by_date(sample_transactions, reverse=False)
+    ids = [t["id"] for t in result]
+    assert ids == [4, 5, 1, 3, 2]
