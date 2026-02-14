@@ -29,15 +29,18 @@ def empty_transactions():
     ])
 def test_mask_card_number(input_number, expected):
         """Тест маски карт (16 цифр)."""
-        assert mask_account_card(input_number) == expected
+        assert get_mask_card_number(input_number) == expected
 
 @pytest.mark.parametrize("invalid_input", [
-    "65784", "6878127452", "", "81645217446586541386494644654"
+    "65784",
+    "6878127452",
+    "",
+    "81645217446586541386494644654"
 ])
 def test_mask_card_number_exception(invalid_input):
     """Проверка на ValueError с длиной карт."""
     with pytest.raises(ValueError):
-        mask_account_card(invalid_input)
+        get_mask_card_number(invalid_input)
 
 @pytest.mark.parametrize("input_acc, expected", [
         ("73654108430135874305", "** 4305"),
@@ -45,13 +48,13 @@ def test_mask_card_number_exception(invalid_input):
     ])
 def test_mask_account_card_number(input_acc, expected):
     """Тест маски корректных счетов(20 цифр)."""
-    assert mask_account_card(input_acc) == expected
+    assert get_mask_account(input_acc) == expected
 
-@pytest.mark.parametrize("invalid_input", ["34524", ""])
+@pytest.mark.parametrize("invalid_input", ["34524", "", 52321])
 def test_mask_account_card_number_exception(invalid_input):
     """Проверка на ValueError с длиной счёта."""
     with pytest.raises(ValueError):
-        mask_account_card(invalid_input)
+        get_mask_account(invalid_input)
 
 """Тесты для модуля widget"""
 
@@ -108,9 +111,9 @@ def test_filter_by_state_various(sample_transactions, state, expected):
     result = filter_by_state(sample_transactions, state)
     assert len(result) == expected
 
-def test_filter_by_state_empty(sample_transactions):
+def test_filter_by_state_empty(empty_transactions):
     """Тест с пустым списком."""
-    assert filter_by_state(sample_transactions, "EXECUTED") == []
+    assert filter_by_state(empty_transactions, "EXECUTED") == []
 
 def test_sort_by_date_descending(sample_transactions):
     """Тест сортировки по убыванию."""
