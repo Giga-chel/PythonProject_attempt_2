@@ -35,3 +35,11 @@ def test_transaction_descriptions(test_transactions):
     assert result_list[0] == "Перевод организации"
     assert len(result_list) == 5
 
+# --- card_number_generator
+
+def test_card_number_generator_range():
+    """Тест генератора карт."""
+    gen_result = card_number_generator(1, 3)
+    result_list = list(gen_result)
+    assert len(result_list) == 3
+    assert result_list[0] == "0000 0000 0000 0001"
