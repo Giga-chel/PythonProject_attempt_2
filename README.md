@@ -7,6 +7,7 @@
 + Модуль masks
 + Модуль widget
 + Модуль processing
++ Модуль generators
 * Тестирование
 
 ## Установка
@@ -16,7 +17,7 @@
 ``
 python -m venv venv
 ``
-3. Установите зависимости
+3. Установите зависимости 
 ``
 pip install pytest pytest-cov
 ``
@@ -116,6 +117,67 @@ result = sort_by_date(data)
 # result: [{"id":2, ...}, {"id": 1, ...}]
 ```
 
+#### Модуль generators
+Генераторы для обработки транзакций и создания номеров карт:
+
+Генератор, который фильтрует транзакции по коду валюты
+
+`
+filter_by_currency(transactions, currency_code)
+`
+
+Возвращает итератор
+
+```
+from src.generators import filter_by_currency
+
+transactions = [
+{"operationAmount":{"currency":{"code":"USD"}}},
+{"operationAmount":{"currency":{"code":"RUB"}}},
+]
+
+usd_transactions = filter_by_currency(transactions, "USD")
+for t in usd_transactions:
+print(t)
+# Вывод: {"operationAmount":{"currency":{"code":"USD"}}}
+```
+
+Генератор, который поочередно возвращает описания транзакций
+
+`
+transaction_descriptions(transactions)
+`
+
+```
+from src.generators import transaction_descriptions 
+
+transactions = [
+{"description":"Перевод организации"},
+{"description":"Перевод с карты на карту"}
+]
+
+descriptions = transaction_descriptions(transactions)
+print(list(descriptions))
+# Вывод ["Перевод организации","Перевод с карты на карту"]
+```
+
+Генератор номеров банковских карт в формате `XXXX XXXX XXXX XXXX`. Диапазон задается числами (включительно)
+
+`
+card_number_generator(start, end)
+`
+
+Генерация номеров от 1 до 3
+
+```
+for card in card_number_generator(1, 3)
+print(card)
+# Вывод:
+0000 0000 0000 0001
+0000 0000 0000 0002
+0000 0000 0000 0003
+```
+
 ## Тестирование
 Проект покрыт тестами с использованием библиотеки pytest. Тесты проверяют корректность работы функций, граничные случаи и обработку ошибок
 
@@ -135,4 +197,5 @@ pytest --cov=src tests/
 ### Особенности тестов
 * **Параметризация**: Используются декораторы @pytest.mark.parametrize для проверки функций на множестве входных данных без дублирования кода
 * **Фикстуры**: Тестовые данные вынесены в фикстуры pytest
+* **Генераторы**: Для тестирования генераторов результаты преобразуются в списки для проверки содержимого и длины
 * **Проверка исключений**: Тесты проверяют, что функции выбрасывают ValueError при некорректных входных данных (например, неверная длина номера карты)
