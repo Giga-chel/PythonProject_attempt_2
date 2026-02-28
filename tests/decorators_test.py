@@ -12,10 +12,11 @@ def test_log_console_success(capsys):
     captured = capsys.readouterr()
     assert "успешно" in captured.out
 
+
 def test_log_console_error(capsys):
     @log()
     def log_console(a, b):
-        raise Exception('Ошибка!')
+        raise Exception("Ошибка!")
 
     with pytest.raises(Exception):
         log_console(2, 4)
