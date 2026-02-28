@@ -15,9 +15,9 @@ def test_log_console_success(capsys):
 def test_log_console_error(capsys):
     @log()
     def log_console(a, b):
-        raise ValueError('Ошибка!')
+        raise Exception('Ошибка!')
 
-    with pytest.raises(ValueError):
+    with pytest.raises(Exception):
         log_console(2, 4)
 
     captured = capsys.readouterr()
