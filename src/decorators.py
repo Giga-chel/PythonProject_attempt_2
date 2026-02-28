@@ -1,7 +1,7 @@
 from functools import wraps
 
 
-def log(filename):
+def log(filename=None):
     """Декоратор"""
 
     def decorator(func):
