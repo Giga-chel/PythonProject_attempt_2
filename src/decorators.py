@@ -2,7 +2,7 @@ from functools import wraps
 
 
 def log(filename=None):
-    """Декоратор"""
+    """Декоратор регистрирующий детали выполнения функции"""
 
     def decorator(func):
         @wraps(func)
