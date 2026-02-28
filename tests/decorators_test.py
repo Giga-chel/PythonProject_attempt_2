@@ -23,3 +23,14 @@ def test_log_console_error(capsys):
 
     captured = capsys.readouterr()
     assert "ошибкой" in captured.out
+
+
+def test_log_file_success(tmp_path):
+    path_to_file = tmp_path / "mylog.txt"
+    @log(path_to_file)
+    def log_file(a, b):
+        return a + b
+
+    log_file(1, 2)
+    content = path_to_file.read_text()
+    assert "успешно" in content
