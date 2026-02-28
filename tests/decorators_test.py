@@ -1,5 +1,6 @@
 from src.decorators import log
 
+
 def test_log_console_success(capsys):
     @log()
     def log_console(a, b):
