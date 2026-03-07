@@ -13,3 +13,10 @@ def test_financial_transactions_success():
 def test_financial_transactions_file_not_found():
     result = financial_transactions("non_existent_file.json")
     assert result == []
+
+def test_financial_transactions_empty_json(tmp_path):
+    empty_file = tmp_path / "empty.json"
+    empty_file.write_text("")
+
+    result = financial_transactions(empty_file)
+    assert result == []
