@@ -23,4 +23,4 @@ def get_transactions_amount_in_rub(transaction: dict) -> float:
     elif code == "USD" or code == "EUR":
         return convert_to_rub(amount, code)
     else:
-        return None
+        return 0.0
