@@ -1,20 +1,17 @@
 import os
-from dotenv import load_dotenv
+
 import requests
+from dotenv import load_dotenv
 
 load_dotenv()
+
 
 def convert_to_rub(transactions_sum, currency):
     """Функция конвертирования в рубли"""
     url = "https://api.apilayer.com/exchangerates_data/latest"
     api_key = os.getenv("API_KEY")
-    payload = {
-        "base": currency,
-        "symbols": "RUB"
-    }
-    headers = {
-        "apikey": api_key
-    }
+    payload = {"base": currency, "symbols": "RUB"}
+    headers = {"apikey": api_key}
     response = requests.get(url, headers=headers, params=payload)
 
     status_code = response.status_code
