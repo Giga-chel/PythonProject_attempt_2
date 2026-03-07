@@ -9,3 +9,7 @@ def test_financial_transactions_success():
     result = financial_transactions(file_path)
     assert isinstance(result, list)
     assert len(result) > 0
+
+def test_financial_transactions_file_not_found():
+    result = financial_transactions("non_existent_file.json")
+    assert result == []
