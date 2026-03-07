@@ -42,3 +42,32 @@ def test_get_transactions_amount_in_rub(mock_get):
     result = get_transactions_amount_in_rub(transaction=rub_currency)
     assert result == 500
     mock_get.assert_not_called()
+
+@patch('src.utils.convert_to_rub')
+def test_get_transactions_amount_in_usd_or_eur(mock_convert):
+    """Тест с валютой в USD или EUR"""
+    usd_currency = {
+        "operationAmount": {
+            "amount": 100,
+            "currency": {
+                "code": "USD"
+            }
+        }
+    }
+    eur_currency = {
+        "operationAmount": {
+            "amount": 100,
+            "currency": {
+                "code": "EUR"
+            }
+        }
+    }
+    mock_convert.return_value = 9500.0
+    usd_result = get_transactions_amount_in_rub(transaction=usd_currency)
+    assert usd_result == 9500.0
+    mock_convert.assert_called_with(100.0, "USD")
+
+    mock_convert.return_value = 9800.0
+    eur_result = get_transactions_amount_in_rub(transaction=eur_currency)
+    assert eur_result == 9800.0
+    mock_convert.assert_called_with(100.0, "EUR")
