@@ -10,3 +10,11 @@ def test_convert_to_rub_success(mock_get):
     result = convert_to_rub(100, "USD")
     assert result == 90.5 * 100
     assert mock_get.called
+
+@patch('src.external_api.requests.get')
+def test_convert_to_rub_fail(mock_get):
+    """Тест функции на сбой"""
+    mock_get.return_value.status_code = 500
+    result = convert_to_rub(100, "USD")
+    assert result == 0.0
+    assert mock_get.called
