@@ -8,6 +8,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.14"
 poetry-core = "^2.3.1"
+python-dotenv = "^1.2.2"
 
 
 [build-system]
