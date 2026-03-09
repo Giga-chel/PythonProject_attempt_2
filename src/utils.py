@@ -10,7 +10,7 @@ file_handler = logging.FileHandler("logs/utils.log", "w", encoding="utf-8")
 formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 file_handler.setFormatter(formatter)
 app_logger.addHandler(file_handler)
-app_logger.setLevel(logging.INFO)
+app_logger.setLevel(logging.DEBUG)
 
 
 def financial_transactions(file_path: str) -> list:
