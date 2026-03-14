@@ -9,6 +9,7 @@
 + Модуль decorators
 + Модуль processing
 + Модуль generators
++ Модуль data_readers
 * Тестирование
 
 ## Установка
@@ -22,6 +23,18 @@ python -m venv venv
 ``
 pip install pytest pytest-cov
 ``
+
+## Конфигурация
+Для работы с API курсов валют необходимо настроить переменные окружения
+
+1. Создайте файл `.env` в корне проекта
+2. Добавьте в него ваш API-ключ (полученный на [apilayer.com](https://apilayer.com/exchangerates_data-api))
+
+`
+API_KEY=ваш_токен_здесь
+`
+
+*Пример структуры файла можно посмотреть в `.env.example`*
 
 ## Использование
 
@@ -214,6 +227,28 @@ print(card)
 0000 0000 0000 0002
 0000 0000 0000 0003
 ```
+
+#### Модуль data_readers
+
+#### Чтение данных
+
+#### Для CSV:
+Файл должен использовать разделитель ";"
+
+```
+from src.data_readers import financial_transactions_csv
+
+transactions = financial_transactions_csv('data/transactions.csv')
+```
+
+#### Для XLSX:
+```
+from src.data_readers import financial_transactions_xlsx
+
+transactions = financial_transactions_xlsx('data/transactions_excel.xlsx')
+```
+
+###### Тесты используют `Mock` и `patch` для изоляции от реальной файловой системы и внешних API-сервисов, для стабильности и высокой скорости выполнения
 
 ## Тестирование
 Проект покрыт тестами с использованием библиотеки pytest. Тесты проверяют корректность работы функций, граничные случаи и обработку ошибок
