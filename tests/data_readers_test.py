@@ -20,7 +20,7 @@ def test_financial_transactions_csv_success(mock_file):
 
     mock_file.assert_called_once_with("data/transactions.csv", encoding="utf-8")
 
-@patch("builtins.open", side_effect=mock_open)
+@patch("builtins.open", side_effect=FileNotFoundError)
 def test_financial_transactions_csv_not_found(mock_file):
     """Тест, если CSV файл не найден"""
     result = financial_transactions_csv("data/transactions.csv")
