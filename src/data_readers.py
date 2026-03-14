@@ -11,3 +11,11 @@ def financial_transactions_csv(file_path: str) -> list:
         data = []
     return data
 
+def financial_transactions_xlsx(file_path: str) -> list:
+    """Функция с XLSX-данными о финансовых транзакциях"""
+    try:
+        df = pd.read_excel(file_path)
+        data = df.to_dict('records')
+    except Exception:
+        data = []
+    return data
