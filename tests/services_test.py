@@ -55,3 +55,9 @@ def test_search_no_match(transactions):
     assert len(result) == 0
     assert result == []
 
+
+def test_search_empty_data(transactions):
+    """Тест с пустым списком транзакций"""
+    result = process_bank_search([], "тест")
+    assert result == []
+
