@@ -1,5 +1,6 @@
 import pytest
-from src.services import process_bank_search, process_bank_operations
+
+from src.services import process_bank_operations, process_bank_search
 
 
 @pytest.fixture
@@ -9,30 +10,31 @@ def transactions():
             "id": 1,
             "description": "Перевод от мамы",
             "status": "EXECUTED",
-            "operationAmount": {"amount": 100, "currency": {"code": "RUB"}}
+            "operationAmount": {"amount": 100, "currency": {"code": "RUB"}},
         },
         {
             "id": 2,
             "description": "Покупка кофе",
             "status": "EXECUTED",
-            "operationAmount": {"amount": 200, "currency": {"code": "RUB"}}
+            "operationAmount": {"amount": 200, "currency": {"code": "RUB"}},
         },
         {
             "id": 3,
             "description": "Помощь мамы с деньгами",
             "status": "CANCELED",
-            "operationAmount": {"amount": 5000, "currency": {"code": "USD"}}
+            "operationAmount": {"amount": 5000, "currency": {"code": "USD"}},
         },
         {
             "id": 4,
             "description": "Оплата интернета",
             "status": "PENDING",
-            "operationAmount": {"amount": 1000, "currency": {"code": "RUB"}}
-        }
+            "operationAmount": {"amount": 1000, "currency": {"code": "RUB"}},
+        },
     ]
 
 
 # --- process_bank_search ---
+
 
 def test_search_found_without_register(transactions):
     """Тест функции на поиск без учета регистра"""
@@ -64,16 +66,13 @@ def test_search_empty_data(transactions):
 
 # --- process_bank_operations ---
 
+
 def test_operations_count(transactions):
     """Тест подсчета категорий"""
     categories = ["Мамы", "Кофе", "Интернет"]
     result = process_bank_operations(transactions, categories)
 
-    assert result == {
-        "Мамы": 2,
-        "Кофе": 1,
-        "Интернет": 1
-    }
+    assert result == {"Мамы": 2, "Кофе": 1, "Интернет": 1}
 
 
 def test_operations_zero_count(transactions):
@@ -81,11 +80,7 @@ def test_operations_zero_count(transactions):
     categories = ["Мамы", "Еда", "Такси"]
     result = process_bank_operations(transactions, categories)
 
-    assert result == {
-        "Мамы": 2,
-        "Еда": 0,
-        "Такси": 0
-    }
+    assert result == {"Мамы": 2, "Еда": 0, "Такси": 0}
 
 
 def test_operations_case_without_register(transactions):
