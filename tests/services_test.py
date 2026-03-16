@@ -41,3 +41,10 @@ def test_search_found_without_register(transactions):
     assert result[0]["id"] == 1
     assert result[1]["id"] == 3
 
+
+def test_search_single_match(transactions):
+    """Тест на поиск одного совпадения"""
+    result = process_bank_search(transactions, "кофе")
+    assert len(result) == 1
+    assert result[0]["description"] == "Покупка кофе"
+
