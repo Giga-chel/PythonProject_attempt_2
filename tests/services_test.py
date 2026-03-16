@@ -75,3 +75,15 @@ def test_operations_count(transactions):
         "Интернет": 1
     }
 
+
+def test_operations_zero_count(transactions):
+    """Тест, что категории, которых нет, возвращаются с 0"""
+    categories = ["Мама", "Еда", "Такси"]
+    result = process_bank_operations(transactions, categories)
+
+    assert result == {
+        "Мама": 2,
+        "Еда": 0,
+        "Такси": 0
+    }
+
