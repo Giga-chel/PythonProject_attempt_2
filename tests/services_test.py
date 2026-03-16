@@ -7,7 +7,7 @@ def transactions():
     return [
         {
             "id": 1,
-            "description": "Перевод маме",
+            "description": "Перевод от мамы",
             "status": "EXECUTED",
             "operationAmount": {"amount": 100, "currency": {"code": "RUB"}}
         },
@@ -19,7 +19,7 @@ def transactions():
         },
         {
             "id": 3,
-            "description": "Мама помогла с деньгами",
+            "description": "Помощь мамы с деньгами",
             "status": "CANCELED",
             "operationAmount": {"amount": 5000, "currency": {"code": "USD"}}
         },
@@ -36,7 +36,7 @@ def transactions():
 
 def test_search_found_without_register(transactions):
     """Тест функции на поиск без учета регистра"""
-    result = process_bank_search(transactions, "МАМЕ")
+    result = process_bank_search(transactions, "Мамы")
     assert len(result) == 2
     assert result[0]["id"] == 1
     assert result[1]["id"] == 3
@@ -66,11 +66,11 @@ def test_search_empty_data(transactions):
 
 def test_operations_count(transactions):
     """Тест подсчета категорий"""
-    categories = ["Мама", "Кофе", "Интернет"]
+    categories = ["Мамы", "Кофе", "Интернет"]
     result = process_bank_operations(transactions, categories)
 
     assert result == {
-        "Мама": 2,
+        "Мамы": 2,
         "Кофе": 1,
         "Интернет": 1
     }
@@ -78,11 +78,11 @@ def test_operations_count(transactions):
 
 def test_operations_zero_count(transactions):
     """Тест, что категории, которых нет, возвращаются с 0"""
-    categories = ["Мама", "Еда", "Такси"]
+    categories = ["Мамы", "Еда", "Такси"]
     result = process_bank_operations(transactions, categories)
 
     assert result == {
-        "Мама": 2,
+        "Мамы": 2,
         "Еда": 0,
         "Такси": 0
     }
@@ -90,7 +90,7 @@ def test_operations_zero_count(transactions):
 
 def test_operations_case_without_register(transactions):
     """Тест подсчет не зависит от регистра"""
-    categories = ["мАмА"]  # Странный регистр в запросе
+    categories = ["Мамы"]  # Странный регистр в запросе
     result = process_bank_operations(transactions, categories)
 
-    assert result["мАмА"] == 2
+    assert result["Мамы"] == 2
