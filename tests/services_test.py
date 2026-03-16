@@ -87,3 +87,10 @@ def test_operations_zero_count(transactions):
         "Такси": 0
     }
 
+
+def test_operations_case_without_register(transactions):
+    """Тест подсчет не зависит от регистра"""
+    categories = ["мАмА"]  # Странный регистр в запросе
+    result = process_bank_operations(transactions, categories)
+
+    assert result["мАмА"] == 2
