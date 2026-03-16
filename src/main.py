@@ -45,8 +45,12 @@ def main():
 
     sort_the_date = input('Сортировать операции по дате? Да/Нет')
     if sort_the_date.upper() == 'ДА':
-        descending_or_ascending = input('Отсортировать по \n1.Возрастанию \n2.Убыванию?')
+        descending_or_ascending = input('Отсортировать по \n1.Возрастанию \n2.Убыванию')
         if descending_or_ascending == '1':
             filtered_data = sorted(filtered_data, key=lambda k: datetime.strptime(k['date'], '%d-%m-%Y'), reverse=False)
         elif descending_or_ascending == '2':
             filtered_data = sorted(filtered_data, key=lambda k: datetime.strptime(k['date'], '%d-%m-%Y'), reverse=True)
+
+    sort_in_rub = input('Выводить транзакции только в рублях? Да/Нет')
+    if sort_in_rub.upper() == 'ДА':
+        filtered_data = sorted(filtered_data, key=lambda l: l['operationAmount']['currency']['code'] == 'RUB')
