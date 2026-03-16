@@ -29,3 +29,15 @@ def main():
           2. Получить информацию о транзакциях из CSV-файла
           3. Получить информацию о транзакциях из XLSX-файла''')
         return
+    valid_status = ['EXECUTED', 'PENDING', 'CANCELLED']
+    while True:
+        status_input = input('Выберите по каким статусам выбрать операции \nEXECUTED \nPENDING \nCANCELLED').upper()
+        if status_input in valid_status:
+            filtered_data = []
+            for item in data:
+                if item['status'] == status_input:
+                    filtered_data.append(item)
+                    print(f'Операции отфильтрованы по статусу {status_input}')
+            break
+        else:
+            print('''Информации по данной операции нет.''')
