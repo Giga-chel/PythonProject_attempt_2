@@ -61,3 +61,17 @@ def test_search_empty_data(transactions):
     result = process_bank_search([], "тест")
     assert result == []
 
+
+# --- process_bank_operations ---
+
+def test_operations_count(transactions):
+    """Тест подсчета категорий"""
+    categories = ["Мама", "Кофе", "Интернет"]
+    result = process_bank_operations(transactions, categories)
+
+    assert result == {
+        "Мама": 2,
+        "Кофе": 1,
+        "Интернет": 1
+    }
+
