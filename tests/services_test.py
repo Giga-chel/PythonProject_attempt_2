@@ -48,3 +48,10 @@ def test_search_single_match(transactions):
     assert len(result) == 1
     assert result[0]["description"] == "Покупка кофе"
 
+
+def test_search_no_match(transactions):
+    """Тест на отсутствие совпадений, возвращается пустой список"""
+    result = process_bank_search(transactions, "автомобиль")
+    assert len(result) == 0
+    assert result == []
+
