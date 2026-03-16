@@ -3,7 +3,7 @@ import csv
 import openpyxl
 
 
-
+from datetime import datetime
 from src.services import process_bank_search, process_bank_operations
 from src.data_readers import financial_transactions_csv, financial_transactions_xlsx
 from src.utils import financial_transactions
@@ -37,7 +37,16 @@ def main():
             for item in data:
                 if item['status'] == status_input:
                     filtered_data.append(item)
-                    print(f'Операции отфильтрованы по статусу {status_input}')
+
+            print(f'Операции отфильтрованы по статусу {status_input}')
             break
         else:
             print('''Информации по данной операции нет.''')
+
+    sort_the_date = input('Сортировать операции по дате? Да/Нет')
+    if sort_the_date.upper() == 'ДА':
+        descending_or_ascending = input('Отсортировать по \n1.Возрастанию \n2.Убыванию?')
+        if descending_or_ascending == '1':
+            filtered_data = sorted(filtered_data, key=lambda k: datetime.strptime(k['date'], '%d-%m-%Y'), reverse=False)
+        elif descending_or_ascending == '2':
+            filtered_data = sorted(filtered_data, key=lambda k: datetime.strptime(k['date'], '%d-%m-%Y'), reverse=True)
