@@ -1,4 +1,6 @@
 import re
+from collections import Counter
+
 
 def process_bank_search(data:list[dict], search:str)->list[dict]:
     result = []
@@ -10,9 +12,13 @@ def process_bank_search(data:list[dict], search:str)->list[dict]:
 
 
 def process_bank_operations(data:list[dict], categories:list)->dict:
-    result = {category: 0 for category in categories}
+    counts = Counter()
+
     for item in data:
+        description = item.get('description', '')
         for category in categories:
-            if re.search(category.lower(), item['description'], flags=re.IGNORECASE):
-                result[category] += 1
+            if re.search(category.lower(), description, flags=re.IGNORECASE):
+                counts[category] += 1
+
+    result = {category: counts.get(category, 0) for category in categories}
     return result
