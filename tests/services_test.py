@@ -31,3 +31,13 @@ def transactions():
         }
     ]
 
+
+# --- process_bank_search ---
+
+def test_search_found_without_register(transactions):
+    """Тест функции на поиск без учета регистра"""
+    result = process_bank_search(transactions, "МАМЕ")
+    assert len(result) == 2
+    assert result[0]["id"] == 1
+    assert result[1]["id"] == 3
+
