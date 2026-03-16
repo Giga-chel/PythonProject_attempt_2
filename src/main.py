@@ -53,4 +53,29 @@ def main():
 
     sort_in_rub = input('Выводить транзакции только в рублях? Да/Нет')
     if sort_in_rub.upper() == 'ДА':
-        filtered_data = sorted(filtered_data, key=lambda l: l['operationAmount']['currency']['code'] == 'RUB')
+        filtered_data = [item for item in filtered_data if item['operationAmount']['currency']['code'] == 'RUB']
+
+    sort_description = input('Отфильтровать список транзакций по определенному слову в описании? Да/Нет')
+    if sort_description.upper() == 'ДА':
+        search_string = input('По какому слову ищем операцию?')
+        filtered_data = process_bank_search(filtered_data, search_string)
+
+    print('Распечатываю итоговый список транзакций...')
+
+    if not filtered_data:
+        print('Не найдено ни одной транзакции, подходящей под ваши условия фильтрации')
+    else:
+        print(f'Всего банковских операций в выборке: {len(filtered_data)}')
+        for item in filtered_data:
+            date = item.get('date', '')
+            amount_info = item.get('operationAmount', {})
+            amount = amount_info.get('amount', 0)
+            currency = amount_info.get('currency', {}).get('name', '')
+            who_send = item.get('from', 'Неизвестно')
+            who_receive = item.get('to', 'Неизвестно')
+            description = item.get('description', '')
+
+            print(f'{date} {description}')
+            print(f'Сумма: {amount} {currency}')
+            print(f'{who_send} -> {who_receive}')
+            print('')
