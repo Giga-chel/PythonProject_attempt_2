@@ -9,6 +9,9 @@ readme = "README.md"
 python = "^3.14"
 poetry-core = "^2.3.1"
 python-dotenv = "^1.2.2"
+pandas = "^2.2"
+openpyxl = "^3.1"
+requests = "^2.32"
 
 
 [build-system]
@@ -18,7 +21,6 @@ build-backend = "poetry.core.masonry.api"
 [dependency-groups]
 dev = [
     "pytest (>=9.0.2,<10.0.0)",
-    "requests (>=2.32.5,<3.0.0)",
     "pytest-cov (>=7.0.0,<8.0.0)"
 ]
 lint = [
